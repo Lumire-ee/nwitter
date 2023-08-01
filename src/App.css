@@ -77,7 +77,7 @@ header > div {
   display: flex;
 }
 
-header .header_text {
+header .head_text {
   width: 50%;
   font-size: 25px;
   justify-content: center;

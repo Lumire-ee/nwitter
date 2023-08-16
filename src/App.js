@@ -124,8 +124,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />}></Route>
               <Route path="/new" element={<New />}></Route>
-              <Route path="/Edit" element={<Edit />}></Route>
-              <Route path="/Diary/:id" element={<Diary />}></Route>
+              <Route path="/edit/:id" element={<Edit />}></Route>
+              <Route path="/diary/:id" element={<Diary />}></Route>
             </Routes>
           </div>
         </BrowserRouter>
@@ -135,3 +135,5 @@ function App() {
 }
 
 export default App;
+
+// path variable 확인 필요

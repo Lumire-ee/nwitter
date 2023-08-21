@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, createContext } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -22,10 +22,11 @@ const reducer = (state, action) => {
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
-    case " EDIT": {
+    case "EDIT": {
       newState = state.map((it) =>
-        it.id === action.data.id ? { ...action.data } : it
+        it.id === action.data.id ? action.data : it
       );
+      // Item Id와 일치하는 요소를 찾고, 수정된 data객체를 전달.
       break;
     }
     default:
@@ -71,9 +72,15 @@ const dummyData = [
 ];
 
 function App() {
+  useEffect(() => {
+    localStorage.setItem("key", 10);
+    localStorage.setItem("item", 20);
+    localStorage.setItem("myCat", "Tom");
+  }, []);
+
   const [data, dispatch] = useReducer(reducer, dummyData);
 
-  const dataId = useRef(0);
+  const dataId = useRef(6);
 
   // CREATE
   const onCreate = (date, content, emotion) => {

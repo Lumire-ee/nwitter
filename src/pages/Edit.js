@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { DiaryStateContext } from "../App";
@@ -21,6 +21,7 @@ const Edit = () => {
       if (targetDiary) {
         setOriginData(targetDiary);
       } else {
+        alert("!");
         navigate("/", { replace: true });
       }
     }

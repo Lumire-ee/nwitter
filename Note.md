@@ -29,13 +29,16 @@ function App () {
 return (
 <ThemeContext.Provider value={themes.dark}>
 </Toolbar />
-</ThemeContext.Provider>  
+</ThemeContext.Provider>
+
  <!-- Provider로 공급. -->
+
 );
 }
 
 function Toolbar(props) {
 return (
+
 <div>
 <ThemeButton />
 </div>
@@ -50,3 +53,11 @@ Styled By Theme Context
 </button>
 );
 }
+
+<!-- Encountered two children with the same key -->
+
+DummyData사용시 중복키 사용하는지 확인
+
+<!-- 시간비교 -->
+
+바닐라자스에서는 시,분,초까지 비교

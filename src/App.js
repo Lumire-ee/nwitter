@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useRef } from "react";
 
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, json } from "react-router-dom";
 
 import Home from "./pages/Home";
 import New from "./pages/new";
@@ -26,61 +26,35 @@ const reducer = (state, action) => {
       newState = state.map((it) =>
         it.id === action.data.id ? action.data : it
       );
-      // Item Id와 일치하는 요소를 찾고, 수정된 data객체를 전달.
       break;
     }
     default:
       return state;
   }
+
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의 일기 1번",
-    date: 1690953186154,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의 일기 2번",
-    date: 1690953186155,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의 일기 3번",
-    date: 1690953186156,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의 일기 4번",
-    date: 1690953186157,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의 일기 5번",
-    date: 1690953186158,
-  },
-];
-
 function App() {
+  const [data, dispatch] = useReducer(reducer, []);
+
   useEffect(() => {
-    localStorage.setItem("key", 10);
-    localStorage.setItem("item", 20);
-    localStorage.setItem("myCat", "Tom");
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(diaryList[0].id) + 1;
+
+      dispatch({ type: "INIT", data: diaryList });
+    }
   }, []);
 
-  const [data, dispatch] = useReducer(reducer, dummyData);
-
-  const dataId = useRef(6);
+  const dataId = useRef(0);
 
   // CREATE
   const onCreate = (date, content, emotion) => {

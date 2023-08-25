@@ -84,3 +84,35 @@ serve -s build시
   발생 시
   ExecutionPolicy (현재 상태 확인) / Restriced(모든 스크립트 막음)으로 되어있다면
   Set-ExecutionPolicy명령어로 Unrestriced로 설정
+
+<!-- Build / Test -->
+
+App.js 45~
+
+useEffect(() => {
+const localData = localStorage.getItem("diary");
+if (localData) {
+const diaryList = JSON.parse(localData).sort(
+(a, b) => parseInt(b.id) - parseInt(a.id)
+);
+
+        dataId.current = parseInt(diaryList[0].id) + 1;
+        dispatch({ type: "INIT", data: diaryList });
+
+    }
+
+}, []);
+
+Storage의 모든 데이터를 삭제했을 때 localData가 Trusy기 때문에 로직을 수행하지만
+dataId.current = parseInt(diaryList[0].id) + 1;
+구문을 수행할 때 빈 배열의 id값을 참조해서 사용하기에 Cannot read properties of undefined (reading 'id')에러 발생.
+
+if (diaryList.lengh >= 1) 구문으로 조건 만족시에만 로직 실행하게끔 변경.
+
+<!-- Open Graph Protocol -->
+
+meta data / property
+og:title, og:description, og:image, og:url
+
+Sharing Debugger로 테스트하는걸 추천.
+공유하기로 테스트 진행하면 캐시 초기화해야함.
